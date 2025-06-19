@@ -53,14 +53,44 @@
   </div>
 
   <script>
-    document.getElementById('startButton').addEventListener('click', async () => {
+    const BASE = 'https://peaceful-stork-supposedly.ngrok-free.app';
+    const btn = document.getElementById('startButton');
+
+    // Fetch stream status and update button state
+    async function updateButton() {
       try {
-        await fetch('https://YOUR_NGROK_URL/start-stream', { method: 'POST' });
-        alert('Terrarium stream started! It will run for 5 minutes.');
-      } catch (e) {
-        alert('Failed to start the terrarium stream.');
-        console.error(e);
+        const res = await fetch(`${BASE}/stream-status`);
+        const { running } = await res.json();
+        if (running) {
+          btn.textContent = 'Streaming...';
+          btn.disabled = true;
+        } else {
+          btn.textContent = 'Start Stream';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.error('Could not get stream status', err);
       }
+    }
+
+    // Handle click to start the stream
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+      try {
+        await fetch(`${BASE}/start-stream`, { method: 'POST' });
+      } catch (e) {
+        console.error('Failed to start the terrarium stream', e);
+        alert('Failed to start the terrarium stream.');
+      }
+      // Refresh status after attempt
+      await updateButton();
+    });
+
+    // On load, poll status every 5 seconds
+    window.addEventListener('DOMContentLoaded', () => {
+      updateButton();
+      setInterval(updateButton, 5000);
     });
   </script>
 </body>
