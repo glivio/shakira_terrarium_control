@@ -128,5 +128,40 @@
       setInterval(updateButton, 5000);
     });
   </script>
+
+   <!-- maintenance modal -->
+   <div
+   id="maintenanceModal"
+   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+   <div class="relative bg-yellow-100 bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 max-w-sm text-center">
+     <!-- close icon -->
+     <button
+       id="closeModal"
+       class="absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl leading-none"
+     >
+       &times;
+     </button>
+     <h2 class="text-2xl font-semibold mb-2 text-gray-900">Maintenance</h2>
+     <p class="text-gray-800 mb-4">
+       Maintaining infrastructure of the terrarium controller — the stream might not work momentarily.
+     </p>
+     <button
+       id="gotIt"
+       class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-2xl transition-transform hover:scale-105"
+     >
+       Got it!
+     </button>
+   </div>
+ </div>
+
+ <script>
+   const modal = document.getElementById('maintenanceModal');
+   document.getElementById('closeModal').addEventListener('click', () => modal.remove());
+   document.getElementById('gotIt').addEventListener('click', () => modal.remove());
+   modal.addEventListener('click', e => {
+     if (e.target === modal) modal.remove();
+   });
+ </script>
 </body>
 </html>
