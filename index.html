@@ -97,13 +97,15 @@
 
   <script>
     const BASE = 'https://shakirasterrarium.ch';
+    const API_BASE  = 'https://terrarium.shakirasterrarium.ch';
+
     const btn = document.getElementById('startButton');
     const SKIP_HEADER = { 'ngrok-skip-browser-warning': '1' };
 
     // Fetch stream status and update button state
     async function updateButton() {
       try {
-        let res = await fetch(`${BASE}/stream-status`, {
+        let res = await fetch(`${API_BASE}/stream-status`, {
           method: 'GET',
           headers: {
             ...SKIP_HEADER,
@@ -132,7 +134,7 @@
       btn.disabled = true;
       btn.textContent = 'Streaming...';
       try {
-        await fetch(`${BASE}/start-stream`, { method: 'POST' });
+        await fetch(`${API_BASE}/start-stream`, { method: 'POST' });
       } catch (e) {
         console.error('Failed to start the terrarium stream', e);
         alert('Failed to start the terrarium stream.');
