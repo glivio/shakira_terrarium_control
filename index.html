@@ -28,27 +28,35 @@
   <!-- Custom font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-white font-sans min-h-screen flex items-center justify-center p-4">
-  <div id="redirectWarning" class="bg-yellow-200 text-gray-800 border-l-4 border-yellow-600 p-4 mb-6 max-w-2xl mx-auto rounded-xl shadow-lg text-center hidden">
-    <strong>You're in the wrong place!</strong><br />
-    For the live stream to work, please visit:<br />
-    <a href="https://shakirasterrarium.ch" class="underline font-semibold text-blue-700">https://shakirasterrarium.ch</a>
-  </div>
-  
-  <script>
-    const correctHost = 'shakirasterrarium.ch';
-    const currentHost = window.location.hostname;
-  
-    if (currentHost !== correctHost && !currentHost.endsWith(correctHost)) {
-      const fallback = document.getElementById('redirectWarning');
-      fallback.classList.remove('hidden');
-  
-      // Optional: automatically redirect after 3 seconds
-      setTimeout(() => {
-        window.location.replace(`https://${correctHost}${window.location.pathname}`);
-      }, 3000);
-    }
-  </script>
+
+<div
+  id="redirectWarning"
+  class="fixed inset-x-0 top-0 bg-yellow-200 text-gray-800 border-b-4 border-yellow-600 p-4 text-center z-50 hidden"
+>
+  <strong>You’re in the wrong place!</strong><br/>
+  For the live stream to work, head over to<br/>
+  <a
+    href="https://terrarium.shakirasterrarium.ch/"
+    class="underline font-semibold text-blue-700"
+  >
+    https://terrarium.shakirasterrarium.ch
+  </a>
+</div>
+
+<script>
+  const correctHost = 'terrarium.shakirasterrarium.ch';
+  const currentHost = window.location.hostname;
+
+  if (currentHost !== correctHost && !currentHost.endsWith(correctHost)) {
+    // show banner
+    document.getElementById('redirectWarning').classList.remove('hidden');
+
+    // auto-redirect to root after 3s
+    setTimeout(() => {
+      window.location.replace(`https://${correctHost}/`);
+    }, 3000);
+  }
+</script>
 
   <div class="w-full max-w-2xl sm:max-w-3xl bg-cardbg backdrop-blur-sm rounded-3xl shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-6">
     <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-center">Shakira's Terrarium Live Stream</h1>
