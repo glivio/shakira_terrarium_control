@@ -30,32 +30,49 @@
 </head>
 
 <div
-  id="redirectWarning"
-  class="fixed inset-x-0 top-0 bg-yellow-200 text-gray-800 border-b-4 border-yellow-600 p-4 text-center z-50 hidden"
+id="redirectBanner"
+class="fixed inset-x-0 top-0 bg-yellow-400 text-gray-900 flex items-center justify-center space-x-2 py-2 px-4 shadow-md hidden z-50"
 >
-  <strong>You’re in the wrong place!</strong><br/>
-  For the live stream to work, head over to<br/>
+<span class="text-xl">⚠️</span>
+<span class="font-semibold">
+  Oops! To view the live stream, please visit
   <a
-    href="https://terrarium.shakirasterrarium.ch/"
-    class="underline font-semibold text-blue-700"
+    href="https://shakirasterrarium.ch/"
+    class="underline hover:text-yellow-600"
   >
-    https://terrarium.shakirasterrarium.ch
+    shakirasterrarium.ch
   </a>
+</span>
+<button
+  id="closeBanner"
+  class="ml-4 text-gray-700 hover:text-gray-900 focus:outline-none"
+  aria-label="Close banner"
+>
+  &times;
+</button>
 </div>
 
+
 <script>
-  const correctHost = 'terrarium.shakirasterrarium.ch';
-  const currentHost = window.location.hostname;
+  (function() {
+    const correctHost = 'shakirasterrarium.ch';
+    const currentHost = window.location.hostname;
+    const banner = document.getElementById('redirectBanner');
+    const closeBtn = document.getElementById('closeBanner');
 
-  if (currentHost !== correctHost && !currentHost.endsWith(correctHost)) {
-    // show banner
-    document.getElementById('redirectWarning').classList.remove('hidden');
+    if (currentHost !== correctHost && !currentHost.endsWith(correctHost)) {
+      // show banner
+      banner.classList.remove('hidden');
 
-    // auto-redirect to root after 3s
-    setTimeout(() => {
-      window.location.replace(`https://${correctHost}/`);
-    }, 3000);
-  }
+      // auto-redirect after 3s to the root
+      setTimeout(() => {
+        window.location.replace(`https://${correctHost}/`);
+      }, 3000);
+    }
+
+    // allow manual dismissal
+    closeBtn.addEventListener('click', () => banner.remove());
+  })();
 </script>
 
   <div class="w-full max-w-2xl sm:max-w-3xl bg-cardbg backdrop-blur-sm rounded-3xl shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-6">
